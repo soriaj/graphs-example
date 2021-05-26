@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: comicbox-service
+  labels:
+    app: comicbox
+    release: 'v{{repl KurlString "Prometheus.Version" }}'
+spec:
+  selector:
+    app: comicbox
+    release: 'v{{repl KurlString "Prometheus.Version" }}'
+  type: NodePort
+  ports:
+    - port: 3000
+      name: http
+      targetPort: 3000
+      nodePort: 30080

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mailcatcher
+  namespace: monitoring
+  labels:
+    app: mailcatcher
+  annotations:
+    kots.io/when: '{{repl and (IsKurl) (ConfigOption "smtp_run_mailcatcher") }}'
+spec:
+  type: NodePort
+  ports:
+    - port: 1025
+      nodePort: 1025
+      name: smtp
+    - port: 1080
+      nodePort: 1080
+      name: http
+  selector:
+    app: mailcatcher

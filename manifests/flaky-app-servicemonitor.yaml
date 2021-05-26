@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: flaky-app
+    release: 'v{{repl KurlString "Prometheus.Version" }}'
+  name: flaky-app
+  namespace: monitoring
+spec:
+  endpoints:
+  - port: http
+    interval: 5s
+    path: /metrics
+  namespaceSelector:
+    matchNames:
+    - '{{repl Namespace}}'
+  selector:
+    matchLabels:
+      app: flaky-app
+      release: 'v{{repl KurlString "Prometheus.Version" }}'

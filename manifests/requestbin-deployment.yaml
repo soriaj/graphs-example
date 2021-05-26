@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: requestbin
+  namespace: monitoring
+  labels:
+    app: requestbin
+  annotations:
+    kots.io/when: '{{repl ConfigOption "webhook_run_requestbin" }}'
+spec:
+  selector:
+    matchLabels:
+      app: requestbin
+  template:
+    metadata:
+      labels:
+        app: requestbin
+    spec:
+      containers:
+        - name: requestbin
+          image: weshigbee/requestbin
+          ports:
+            - containerPort: 8000

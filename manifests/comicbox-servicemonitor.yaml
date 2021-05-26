@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: comicbox
+    release: 'v{{repl KurlString "Prometheus.Version" }}'
+  name: comicbox
+  namespace: monitoring
+spec:
+  endpoints:
+  - interval: 5s
+    path: swagger-stats/metrics
+    port: http
+  namespaceSelector:
+    matchNames:
+    - '{{repl Namespace}}'
+  selector:
+    matchLabels:
+      app: comicbox
+      release: 'v{{repl KurlString "Prometheus.Version" }}'

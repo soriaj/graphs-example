@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comicbox
+  labels: 
+    app: comicbox
+    release: 'v{{repl KurlString "Prometheus.Version" }}'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comicbox
+      release: 'v{{repl KurlString "Prometheus.Version" }}'
+  template:
+    metadata:
+      labels:
+        app: comicbox
+        release: 'v{{repl KurlString "Prometheus.Version" }}'
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: 'swagger-stats/metrics'
+        prometheus.io/port: "3000"
+    spec:
+      containers:
+        - name: comicbox
+          image: jasoria/comicbox
+          ports:
+            - containerPort: 3000
+              name: http
