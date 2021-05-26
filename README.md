@@ -58,7 +58,7 @@ Once the ```kind: ServiceMonitor``` has been applied you the service (*comicbox*
 
 Once the service and target are available you can use the corresponding PromQL query to access the endpoints metrics.
 
-Comicbox Metrics Example: 
+Comicbox Promethues Query Example: 
 ```bash
 sum(nodejs_process_cpu_usage_percentage) by (service)
 ```
